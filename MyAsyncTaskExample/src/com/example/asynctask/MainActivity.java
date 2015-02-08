@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	private ProgressBar progressbar;
+	private ProgressBar progressBar;
 	private TextView msgTextView;
 	private Long mTimeUsage;
 	private MyBackgroundtask mBackgroundTask;
@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		progressbar = (ProgressBar) findViewById(R.id.progressBar1);
+		progressBar = (ProgressBar) findViewById(R.id.progressBar1);
 		msgTextView = (TextView) findViewById(R.id.textViewMsg);
 
 		updateStatus(MyTaskStatus.STOP);
@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void doCancelBackgroundtask(View v) {
-		mBackgroundTask.cancel(false);
+		mBackgroundTask.cancel(true);
 
 	}
 
@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected Long doInBackground(Integer... params) {
 			int maxCount = params[0];
-			progressbar.setMax(maxCount);
+			progressBar.setMax(maxCount);
 			long currentTimeMili = System.currentTimeMillis();
 
 			for (int i = 0; i <= maxCount; i++) {
@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					Log.w(tag, "The background task has been interrupted.");
 				}
 			}
 			return System.currentTimeMillis() - currentTimeMili;
@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onProgressUpdate(Integer... values) {
 			Log.i(tag, "The progress: " + values[0]);
-			progressbar.setProgress(values[0]);
+			progressBar.setProgress(values[0]);
 
 		}
 
