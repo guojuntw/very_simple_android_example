@@ -10,11 +10,12 @@ import android.os.IBinder;
 import android.os.Message;
 
 public class MyService extends Service {
-	Handler mMainActivityHandler = MainActivity.getHandler();
+	Handler mMainActivityHandler;
 	boolean mIsRunClock = true;
 
 	public MyService() {
-
+		mMainActivityHandler = MainActivity.getHandler();
+		
 		Bundle mmBondle = new Bundle();
 		mmBondle.putString("msgFromService",
 				"Hi! This message comes from service.");
