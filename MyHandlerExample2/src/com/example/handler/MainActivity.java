@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
     	MainActivity mainActivity;
     	
     	MyHandler(MainActivity activity){
+			super();
     		this.mainActivity = activity;
     	}
     	
