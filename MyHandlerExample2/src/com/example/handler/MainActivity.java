@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
 		return mHandler;	
 	}
 
-    private static class MyHandler extends Handler{
+    private class MyHandler extends Handler{
     	MainActivity mainActivity;
     	
     	MyHandler(MainActivity activity){

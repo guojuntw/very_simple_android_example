@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
 	private boolean runTask = true;
 	private static Handler mHandler;
 
-	static class MyHandler extends Handler {
+	class MyHandler extends Handler {
 		private MainActivity mainActivity;
 
 		public MyHandler(MainActivity activity) {
