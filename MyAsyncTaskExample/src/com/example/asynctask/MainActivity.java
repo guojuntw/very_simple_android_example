@@ -12,8 +12,8 @@ public class MainActivity extends Activity {
 
 	private ProgressBar progressbar;
 	private TextView msgTextView;
-	private boolean mIsCancleTask = false;
 	private Long mTimeUsage;
+	private MyBackgroundtask mBackgroundTask;
 
 	private enum MyTaskStatus {
 		STOP, START, CANCEL, FINISHED
@@ -34,15 +34,13 @@ public class MainActivity extends Activity {
 	}
 
 	public void doBackgroundTask(View v) {
-		mIsCancleTask = false;
-
-		MyBackgroundtask bkTask = new MyBackgroundtask();
-		bkTask.execute(MAX_TASK_COUNTER);
+		mBackgroundTask = new MyBackgroundtask();
+		mBackgroundTask.execute(MAX_TASK_COUNTER);
 
 	}
 
 	public void doCancelBackgroundtask(View v) {
-		mIsCancleTask = true;
+		mBackgroundTask.cancel(false);
 
 	}
 
@@ -56,26 +54,23 @@ public class MainActivity extends Activity {
 			long currentTimeMili = System.currentTimeMillis();
 
 			for (int i = 0; i <= maxCount; i++) {
-				if (!mIsCancleTask) {
-					progress += 1;
+				progress += 1;
 
-					// to publish the progress
-					publishProgress(progress);
+				// to publish the progress
+				publishProgress(progress);
 
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
-
 			return System.currentTimeMillis() - currentTimeMili;
 		}
 
 		@Override
 		protected void onCancelled() {
-
+			updateStatus(MyTaskStatus.CANCEL);
 			super.onCancelled();
 		}
 
@@ -89,12 +84,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(Long result) {
 			mTimeUsage = result;
-
-			if (!mIsCancleTask) {
-				updateStatus(MyTaskStatus.FINISHED);
-			} else {
-				updateStatus(MyTaskStatus.CANCEL);
-			}
+			updateStatus(MyTaskStatus.FINISHED);
 
 			super.onPostExecute(result);
 		}
@@ -117,9 +107,7 @@ public class MainActivity extends Activity {
 			break;
 
 		case CANCEL:
-			msgTextView
-					.setText("The background task has been calceled. \nIt took "
-							+ mTimeUsage + " miliseconds");
+			msgTextView.setText("The background task has been calceled.");
 			break;
 		case FINISHED:
 			msgTextView.setText("The background task has finished. \nIt took "
