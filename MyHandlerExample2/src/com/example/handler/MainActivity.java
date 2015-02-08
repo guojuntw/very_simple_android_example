@@ -12,7 +12,6 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	
 	private static Handler mHandler;
-//	private TextView textView;
 
     public static Handler getHandler() {
 		return mHandler;	

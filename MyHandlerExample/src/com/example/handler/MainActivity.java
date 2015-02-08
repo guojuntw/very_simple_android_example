@@ -3,6 +3,7 @@ package com.example.handler;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,7 +22,6 @@ public class MainActivity extends Activity {
 
 		button = (Button) findViewById(R.id.button1);
 		textView = (TextView) findViewById(R.id.textView1);
-		mHandler = new Handler();
 
 		button.setOnClickListener(new OnClickListener() {
 
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 				for (int i = count; i >= 0; i--) {
 					final int value = i;
 					
-					 mHandler.post(new Runnable() {
+					 new Handler(Looper.getMainLooper()).post(new Runnable() {
 					//textView.post(new Runnable() {
 
 						@Override
